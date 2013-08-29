@@ -16,7 +16,7 @@ License
 Copyright (c) 2013 Riverbed Technology, Inc.
 
 Stingray Plugin for Eclipse is licensed under the terms and conditions of the 
-Eclipse Public License v1.0 set forth at link (“License”). Stingray Plugin for 
+Eclipse Public License v1.0 set forth at link [LICENSE](https://raw.github.com/riverbed/stingray-eclipse/master/LICENSE). Stingray Plugin for 
 Eclipse also includes certain third party code.  All such third party code is 
 also distributed “AS IS” and is licensed by the respective copyright holders 
 under the applicable terms and conditions (including, without limitation, 
