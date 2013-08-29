@@ -1,0 +1,8 @@
+# Git Ignore 
+
+# General temporary files
+*~
+
+# Scripts for deploying to github
+deploy/
+
