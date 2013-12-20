@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="com.zeus.eclipsePlugin_20140207.1.87712.jar" id="com.zeus.eclipsePlugin" version="20140207.1.87712">
+      <category name="Riverbed"/>
+   </feature>
+   <category-def name="Riverbed" label="Riverbed Technology">
+      <description>
+         Zeus Technology
+      </description>
+   </category-def>
+</site>

@@ -1,5 +1,7 @@
 Stingray Plugin for Eclipse is licensed under the following license terms:
 
+Copyright (c) 2014 Riverbed Technology, Inc.
+
 Eclipse Public License - v 1.0
 ==============================
 
@@ -92,7 +94,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
  
 *******************************************************************************
 
-Stingray Plugin for Eclipse includes third party software, including, but not limited to, the third party software identified below.  All such third party code is licensed by the respective copyright holders under the applicable terms and conditions identified below.  Riverbed Technology, Inc. provides all such third party code “AS IS” and disclaims all representations, warranties and liability relating to such third party code.
+Stingray Plugin for Eclipse includes third party software, including, but not limited to, the third party software identified below.  All such third party code is licensed by the respective copyright holders under the applicable terms and conditions identified below.  Riverbed Technology, Inc. provides all such third party code �"AS IS" and disclaims all representations, warranties and liability relating to such third party code.
 
 Apache Axis
 ===========
