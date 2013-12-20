@@ -1,8 +1,11 @@
 # Git Ignore 
 
+*.class
+
 # General temporary files
 *~
+.p4ignore
 
 # Scripts for deploying to github
 deploy/
-
+scripts/

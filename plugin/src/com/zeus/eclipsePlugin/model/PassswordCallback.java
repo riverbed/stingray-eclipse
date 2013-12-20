@@ -1,0 +1,29 @@
+/*******************************************************************************
+ * Copyright (C) 2013 Riverbed Technology, Inc.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Riverbed Technology - Main Implementation
+ ******************************************************************************/
+
+package com.zeus.eclipsePlugin.model;
+
+/**
+ * Used by the ZXTM model element when it needs to query the user for a 
+ * password.
+ */
+public interface PassswordCallback
+{
+   /**
+    * Called when a ZXTM has no password and needs the user to input it. 
+    * 
+    * IMPORTANT: This method should not block while waiting for user input.
+    * 
+    * @param zxtm The ZXTM we need the password for.
+    * @param isError True if this is an incorrect password query.
+    */
+   public void passwordRequired( ZXTM zxtm, boolean isError );
+}
