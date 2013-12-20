@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="com.zeus.eclipsePlugin_20131220.1.85377.jar" id="com.zeus.eclipsePlugin" version="20131220.1.85377">
+   <feature url="com.zeus.eclipsePlugin_20131220.1.85378.jar" id="com.zeus.eclipsePlugin" version="20131220.1.85378">
       <category name="Riverbed"/>
    </feature>
    <category-def name="Riverbed" label="Riverbed Technology">
