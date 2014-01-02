@@ -6,6 +6,9 @@
 *~
 .p4ignore
 
+bin/
+
 # Scripts for deploying to github
 deploy/
 scripts/
+*/tools/*

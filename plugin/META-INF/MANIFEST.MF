@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Zeus Traffic Manager Plug-in
 Bundle-SymbolicName: com.zeus.eclipsePlugin;singleton:=true
-Bundle-Version: 20131220.1.85378
+Bundle-Version: 20140102.1.85459
 Bundle-ClassPath: com.zeus.eclipsePlugin/,
  lib/axis.jar,
  lib/axis-ant.jar,
