@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Zeus Traffic Manager Plug-in
+Bundle-Name: Stingray Plugin for Eclipse
 Bundle-SymbolicName: com.zeus.eclipsePlugin;singleton:=true
-Bundle-Version: 20140102.1.85459
+Bundle-Version: 20140207.1.87712
 Bundle-ClassPath: com.zeus.eclipsePlugin/,
  lib/axis.jar,
  lib/axis-ant.jar,
@@ -16,7 +16,7 @@ Bundle-ClassPath: com.zeus.eclipsePlugin/,
  lib/activation.jar,
  lib/mail.jar
 Bundle-Activator: com.zeus.eclipsePlugin.ZXTMPlugin
-Bundle-Vendor: Zeus Technology
+Bundle-Vendor: Riverbed Technology
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.jface.text,

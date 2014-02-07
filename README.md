@@ -13,12 +13,15 @@ making it easier and quicker with a range of features:
 License
 -------
 
-Copyright (c) 2013 Riverbed Technology, Inc.
+Copyright (c) 2014 Riverbed Technology, Inc.
+Stingray Plugin for Eclipse is licensed under the terms and conditions of the
+Eclipse Public License v1.0 set forth at
+https://github.com/riverbed/stingray-eclipse/blob/master/LICENSE (“License”).
+Stingray Plugin for Eclipse is distributed “AS IS” as set forth in the License.
+Stingray Plugin for Eclipse also includes certain third party code.  All such 
+third party code is also distributed “AS IS” and is licensed by the respective
+copyright holders under the applicable terms and conditions (including, without
+limitation, warranty and liability disclaimers) identified at
+https://github.com/riverbed/stingray-eclipse/blob/master/LICENSE.
 
-Stingray Plugin for Eclipse is licensed under the terms and conditions of the 
-Eclipse Public License v1.0 set forth at link [LICENSE](https://raw.github.com/riverbed/stingray-eclipse/master/LICENSE). Stingray Plugin for 
-Eclipse also includes certain third party code.  All such third party code is 
-also distributed ‚ÄúAS IS‚Äù and is licensed by the respective copyright holders 
-under the applicable terms and conditions (including, without limitation, 
-warranty and liability disclaimers) identified at link.
 
