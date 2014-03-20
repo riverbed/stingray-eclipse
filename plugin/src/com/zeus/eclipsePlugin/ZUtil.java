@@ -33,7 +33,7 @@ public class ZUtil
    
    private static final Pattern HOST_NEG = Pattern.compile( "^\\d+$|\\.\\d[^\\.]*\\.?$" ); //$NON-NLS-1$
    
-   private static final Pattern USERNAME_VALID = Pattern.compile( "^[a-zA-Z0-9-_]+$" ); //$NON-NLS-1$
+   private static final Pattern USERNAME_VALID = Pattern.compile( "^[a-zA-Z0-9-_\\.@]+$" ); //$NON-NLS-1$
    
    /**
     * Function for validating rule names.

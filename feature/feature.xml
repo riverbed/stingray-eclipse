@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><feature id="com.zeus.eclipsePlugin" label="Stingray Plugin for Eclipse" provider-name="Riverbed Technology" version="20140207.1.87712">
+<?xml version="1.0" ?><feature id="com.zeus.eclipsePlugin" label="Stingray Plugin for Eclipse" provider-name="Riverbed Technology" version="20140320.1.90861">
 
    <description url="https://github.com/riverbed/stingray-eclipse">
       Plug-in that allows the editing of TrafficScript rules on a Riverbed

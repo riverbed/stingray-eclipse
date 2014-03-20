@@ -277,20 +277,30 @@ public class SOAPZXTM extends ZXTM implements SOAPUpdatable
          return true;
       }
                
-      // Check it can edit TrafficScript (Not an S?LB)
-      SystemLicenseKeysPort_PortType licence = getLicenceKeyInterface();
-      SystemLicenseKeysLicenseKey[] currentLicence = 
-         licence.getLicenseKeys( new int[] { licence.getCurrentLicenseKey() } 
-      );
-      
-      if( currentLicence.length >= 1 ) {
-         ZDebug.print( 7, "Features: ", ZUtil.join( ", ", currentLicence[0].getFeatures() ) );
-         for( String feature : currentLicence[0].getFeatures() ) {
-            if( feature.equals( "ZXTM_RULEBUILDER" ) ) {
-               throw new ModelException( this, ModelError.NO_TRAFFIC_SCRIPT );
-            }
+      try {
+	      // Check it can edit TrafficScript (Not an S?LB)
+	      SystemLicenseKeysPort_PortType licence = getLicenceKeyInterface();
+	      SystemLicenseKeysLicenseKey[] currentLicence = 
+	         licence.getLicenseKeys( new int[] { licence.getCurrentLicenseKey() } 
+	      );
+	      
+	      if( currentLicence.length >= 1 ) {
+	         ZDebug.print( 7, "Features: ", ZUtil.join( ", ", currentLicence[0].getFeatures() ) );
+	         for( String feature : currentLicence[0].getFeatures() ) {
+	            if( feature.equals( "ZXTM_RULEBUILDER" ) ) {
+	               throw new ModelException( this, ModelError.NO_TRAFFIC_SCRIPT );
+	            }
+	         }
+	      }
+      } catch ( org.apache.zeusaxis.AxisFault e ) {
+         // Bug in Traffic Manager causes this exception to be raised in
+         // developer mode.  However, developer mode permits editing of
+         // TrafficScript, so do nothing here.
+         if( ! (e.detail instanceof org.xml.sax.SAXException ) ) {
+            throw e;
          }
-      }    
+         ZDebug.print( 8 , e.getFaultReason() );
+      }
       
       // Update the list of rules
       updateRules();

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Stingray Plugin for Eclipse
 Bundle-SymbolicName: com.zeus.eclipsePlugin;singleton:=true
-Bundle-Version: 20140207.1.87712
+Bundle-Version: 20140320.1.90861
 Bundle-ClassPath: com.zeus.eclipsePlugin/,
  lib/axis.jar,
  lib/axis-ant.jar,
