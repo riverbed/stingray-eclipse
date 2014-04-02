@@ -239,6 +239,23 @@
             </func>
          </functions>
       </group>
+      <group name="auth">
+         <description></description>
+         <functions>
+            <func name="auth.query">
+               <parameters min="2" max="3" regex="...?">
+                  <param name="authenticator" />
+                  <param name="user" />
+                  <param name="password" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; &lt;p&gt; Queries the named authenticator for information about &lt;b&gt;user&lt;/b&gt; and, if supplied, checks that &lt;b&gt;password&lt;/b&gt; matches the password on record for that user. Authenticators can be configured from the &lt;b&gt;Catalog &amp;gt; Authenticators&lt;/b&gt; page of the Administration Server. &lt;/p&gt; &lt;p&gt; After looking up the user, this function will return a hash with the following values set: &lt;ul&gt; &lt;li&gt; &lt;b&gt;OK&lt;/b&gt; - Set to true if the query was successful. Set to false if the user could not be found, if the supplied password was incorrect, or if the authenticator encountered a problem. &lt;/li&gt; &lt;li&gt; &lt;b&gt;Error&lt;/b&gt; - Set to an error message if the authenticator encountered a problem, for example if it was unable to contact the authentication server. &lt;/li&gt; &lt;/ul&gt; &lt;/p&gt; &lt;p&gt; Authenticators can be configured to provide information about the supplied user, for example the groups to which they belong. This information will also be contained in the hash returned by the auth.query() function. &lt;/p&gt; &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+         </functions>
+      </group>
       <group name="connection">
          <description>Generic functions that affect the current connection.</description>
          <functions>
@@ -734,6 +751,93 @@
             </func>
          </functions>
       </group>
+      <group name="data.local">
+         <description></description>
+         <functions>
+            <func name="data.local.get">
+               <parameters min="1" max="1" regex=".">
+                  <param name="key" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Returns the value that was previously stored with the given key using data.local.set(), or returns the empty string if no data was stored. &lt;br/&gt; Values stored in this way are persistent; a value stored in one rule can later be retrieved by a different rule handling a different connection as long as it is handled by the same child process. Thus, a rule can maintain persistent state across connections. The value can be different or non-existent on another child process. &lt;br/&gt; data.local.get() and data.local.set() are useful for caching data where coherence is not required. &lt;br/&gt; &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.set" />
+                  <related func="data.local.remove" />
+                  <related func="data.local.getMemoryUsage" />
+               </relatedFunctions>
+            </func>
+            <func name="data.local.getMemoryFree">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Returns the amount of free space, in bytes, available for storing information with data.local.set(). &lt;br/&gt; If memory space is low, then data.local.reset() can be used to clear some or all of the entries from the storage. Alternatively, the upper limit on memory can be configured using trafficscript!data_local_size on the Global Settings page. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.set" />
+                  <related func="data.local.reset" />
+                  <related func="data.local.getMemoryUsage" />
+               </relatedFunctions>
+            </func>
+            <func name="data.local.getMemoryUsage">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Returns an estimate of the amount of memory, in bytes, used by entries that have been stored by data.local.set(). &lt;br/&gt; This can be used to verify if a rule is storing excessive amounts of data, starving the host machine of memory. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.set" />
+                  <related func="data.local.reset" />
+                  <related func="data.local.getMemoryFree" />
+               </relatedFunctions>
+            </func>
+            <func name="data.local.remove">
+               <parameters min="1" max="1" regex=".">
+                  <param name="key" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Removes the value that was previously associated with the given key using data.local.set(). &lt;br/&gt; data.local.remove() returns 1 if the item did exist, or 0 if it was not found. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.set" />
+                  <related func="data.local.get" />
+                  <related func="data.local.reset" />
+               </relatedFunctions>
+            </func>
+            <func name="data.local.reset">
+               <parameters min="0" max="1" regex=".?">
+                  <param name="prefix" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Removes some or all of the mappings created by data.local.set(). With no arguments, it removes all keys. With a single argument, it removes all keys that begin with the supplied string. &lt;br/&gt; NOTE: Should you intend to delete a specific individual key, data.local.remove() is more suited to this task. It offers greater performance and also ensures there is no risk of accidentally deleting other keys that start with the same string. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.set" />
+                  <related func="data.local.remove" />
+                  <related func="data.local.getMemoryUsage" />
+                  <related func="data.local.getMemoryFree" />
+               </relatedFunctions>
+            </func>
+            <func name="data.local.set">
+               <parameters min="2" max="2" regex="..">
+                  <param name="key" />
+                  <param name="value" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+               </restrictions>
+               <description>&lt;p&gt; Stores a value, associating it with the provided key. The value can be retrieved later using data.local.get(), even from a different rule or connection processed by the same child process. &lt;br/&gt; The value will be stored as a string, implicit conversion of floating point numbers to strings can cause some precision loss. You can convert a floating point number into a string with no precision loss using 'string.sprintf( "%f", $val )'. Arrays and hashes are serialised before storing and will be deserialised into their original form when retrieved with data.local.get(). &lt;br/&gt; To prevent memory problems, there is an upper limit on the amount of data that can be stored in the local TrafficScript data storage. This means that the data.local.set() may fail. The upper limit can be configured using trafficscript!data_local_size on the Global Settings page. &lt;br/&gt; data.local.set() returns true if the entry was stored, or false if there was no room. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="data.local.get" />
+                  <related func="data.local.remove" />
+                  <related func="data.local.getMemoryUsage" />
+               </relatedFunctions>
+            </func>
+         </functions>
+      </group>
       <group name="event">
          <description>Functions to generate custom events.</description>
          <functions>
@@ -894,6 +998,147 @@
                   <restriction type="ZXTM_GEO" />
                </restrictions>
                <description>&lt;p&gt; Returns the two-character region code (e.g. US state abbreviation) of the supplied IPv4 address, or the empty string. The code for a given region may differ between software versions. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+         </functions>
+      </group>
+      <group name="glb">
+         <description></description>
+         <functions>
+            <func name="glb.getDomain">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get the domain currently being processed. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.getIPs">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get an array of the IPs associated with the domain currently being processed. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+         </functions>
+      </group>
+      <group name="glb.service">
+         <description></description>
+         <functions>
+            <func name="glb.service.avoidLocation">
+               <parameters min="1" max="1" regex=".">
+                  <param name="location" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Avoid the specified location when re-writing the DNS response for the current domain. &lt;/p&gt;&lt;p&gt; The effect of this is to narrow down the list of available locations to just those that are not avoided. &lt;/p&gt;&lt;p&gt; If a location is both preferred and avoided being preferred will take precedence. If all locations are avoided (and none preferred) the outcome of the balancing algorithm will be as if no preferences have been specified. &lt;/p&gt;&lt;p&gt; If the location is unknown, unconfigured, or dead this preference will have no effect on the balancing decision. (In these cases a warning event will be raised and logged.) &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.getLocationWeight">
+               <parameters min="1" max="2" regex=".|..">
+                  <param name="location" />
+                  <param name="service" />
+               </parameters>
+               <restrictions>
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get the weight of the specified location, as configured for the Weighted Random load balancing algorithm for the specified service, or for the current service if no service is specified and the function is used in a GLB service rule. &lt;/p&gt;&lt;p&gt; If the service is not using the Weighted Random load balancing algorithm then the weight for all locations will be reported as 0. &lt;/p&gt;&lt;p&gt; If the location does not exist, or is not configured for the specified service, the function will return -1 and will print a warning to the event log. &lt;/p&gt;&lt;p&gt; A service must be specified if this function is used outside a GLB service rule. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.getName">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get the name of the current GLB service configuration. &lt;/p&gt;&lt;p&gt; This is the service that has been picked to handle the current domain. It is this service that will have specified that the rule be executed. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.getNearestLocation">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get the name of the traffic manager location calculated to be the closest to geographic location the client IP. Note that only live traffic manager locations are considered in this calculation. &lt;/p&gt;&lt;p&gt; If no nearest traffic manager location could be calculated the empty string is returned. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.ignoreLocation">
+               <parameters min="1" max="1" regex=".">
+                  <param name="location" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Do not consider the specified location when re-writing the DNS response for the current domain. &lt;/p&gt;&lt;p&gt; This removes the specified location from the list of available locations. &lt;/p&gt;&lt;p&gt; Multiple locations can be ignored, if all available locations are ignored it will be as if all locations are dead. Ignoring locations takes precedence over preferring locations. &lt;/p&gt;&lt;p&gt; If the location is unknown, unconfigured, or dead this preference will have no effect on the balancing decision. (In these cases a warning event will be raised and logged.) &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.isLocationLive">
+               <parameters min="1" max="2" regex=".|..">
+                  <param name="location" />
+                  <param name="service" />
+               </parameters>
+               <restrictions>
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Check if a location is live. A non-live location includes those for which monitors have failed, or those that are in the "draining" list for the specified service, or for the current service if no service is specified and the function is used in a GLB service rule. &lt;/p&gt;&lt;p&gt; The function returns 1 if the location is live, 0 if it isn't, and -1 if the location does not exist or is not configured for the current service. &lt;/p&gt;&lt;p&gt; A service must be specified if this function is used outside a GLB service rule. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.listDomains">
+               <parameters min="0" max="1" regex="|.">
+                  <param name="service" />
+               </parameters>
+               <restrictions>
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get an array of the domains the specified GLB service is configured to handle, or the domains that the current GLB service is configured to handle if no service is specified. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules unless the service parameter is specified. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.listLocations">
+               <parameters min="0" max="1" regex="|.">
+                  <param name="service" />
+               </parameters>
+               <restrictions>
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Get a priority-ordered array of the locations configured for the specified GLB service, or the current GLB service if none is specified. This is the value of the &lt;b&gt;location_order&lt;/b&gt; config key. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules unless the service parameter is specified. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.preferLocation">
+               <parameters min="1" max="1" regex=".">
+                  <param name="location" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Prefer the specified location when re-writing the DNS response for the current domain. More than one location may be preferred by calling this function multiple times. &lt;/p&gt;&lt;p&gt; The effect of this is to narrow down the list of available locations to just those that have been selected as preferred. However, if no preferred locations are available balancing will fall back to other available locations. &lt;/p&gt;&lt;p&gt; If a location is both preferred and avoided being preferred will take precedence. If all locations are preferred the outcome of the balancing algorithm will be as if no preferences have been specified. &lt;/p&gt;&lt;p&gt; If the location is unknown, unconfigured, or dead this preference will have no effect on the balancing decision. (In these cases a warning event will be raised and logged.) &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.skip">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Skip the current service configuration. This means that no futher service rules will be executed and no balancing will occur for the domain currently being processed. The DNS records for the domain will be sent to the client unchanged. (Further A-record domains in the current DNS response may still be processed.) &lt;/p&gt;&lt;p&gt; The glb.service.skip() call does not return. &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
+               <relatedFunctions></relatedFunctions>
+            </func>
+            <func name="glb.service.useLocation">
+               <parameters min="1" max="1" regex=".">
+                  <param name="location" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_GLB" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Force use of the specified location when re-writing the DNS response for the current domain. &lt;/p&gt;&lt;p&gt; If the location has IPs configured for the current service that match IPs returned in the DNS response for the current domain the response will be re-written to use only the IPs configured for the location. &lt;/p&gt;&lt;p&gt; If the location is unknown, unconfigured, or dead this preference will have no effect on the balancing decision. (In these cases a warning event will be raised and logged.) &lt;/p&gt;&lt;p&gt; This function can only be used in GLB service rules. &lt;/p&gt;</description>
                <relatedFunctions></relatedFunctions>
             </func>
          </functions>
@@ -1919,6 +2164,36 @@
                   <related func="http.getResponseHeader" />
                   <related func="http.removeResponseHeader" />
                   <related func="http.setHeader" />
+               </relatedFunctions>
+            </func>
+         </functions>
+      </group>
+      <group name="http.aptimizer">
+         <description></description>
+         <functions>
+            <func name="http.aptimizer.bypass">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_HTTP" />
+                  <restriction type="ZXTM_APTIMIZER" />
+               </restrictions>
+               <description>&lt;p&gt; Do not use Aptimizer to optimize the result of this request. Note that http.aptimizer.bypass() should not be used to turn off content optimization for requests that have been previously optimized as this might result in some requests not being served. Instead, create a new Aptimizer profile with the mode set to 'Idle' and assign this profile to the request using http.aptimizer.use(). &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="http.aptimizer.use" />
+               </relatedFunctions>
+            </func>
+            <func name="http.aptimizer.use">
+               <parameters min="2" max="2" regex="..">
+                  <param name="scope" />
+                  <param name="profile" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_HTTP" />
+                  <restriction type="ZXTM_APTIMIZER_ENTERPRISE" />
+               </restrictions>
+               <description>&lt;p&gt; Use the specified Aptimizer scope and profile to optimize web content served to the client that sent this request. If the named Aptimizer scope or profile does not exist then a warning message will be logged and the traffic manager will choose a scope matching the request based on the Aptimizer settings configured for the virtual server, and use the associated profile. If no scope matches the request then no optimization will occur. If the virtual server does not have Aptimizer enabled, then a warning message will be logged and no optimization will occur. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="http.aptimizer.bypass" />
                </relatedFunctions>
             </func>
          </functions>
@@ -4999,6 +5274,30 @@
                <description>&lt;p&gt; Returns 1 if this connection from the remote client was SSL encrypted and your traffic manager has decrypted the traffic. Otherwise, it returns 0. &lt;/p&gt;</description>
                <relatedFunctions></relatedFunctions>
             </func>
+            <func name="ssl.requestCert">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_TCP" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Initiates an SSL renegotiation with the client, requesting a certificate. Even if the client fails to provide a certificate, rule processing continues after the re-handshake is complete. If the client had already provided a certificate, this function does nothing and rule processing continues. If the underlying connection is not SSL, the transaction is aborted (i.e., this is interpreted as a failed re-handshake). Note that using this function overrides the setting ssl!ssl3_allow_rehandshake. It is strongly recommended to check for client-side support of RFC 5746 before using it, see ssl.clientSupportsSecureRenegotiation. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="ssl.clientSupportsSecureRenegotiation" />
+                  <related func="ssl.requireCert" />
+               </relatedFunctions>
+            </func>
+            <func name="ssl.requireCert">
+               <parameters min="0" max="0" regex=""></parameters>
+               <restrictions>
+                  <restriction type="ZXTM_TCP" />
+                  <restriction type="REQUIRES_CONNECTION" />
+               </restrictions>
+               <description>&lt;p&gt; Initiates an SSL renegotiation with the client, requiring a certificate. If the client fails to provide a valid cert, the connection is closed with an SSL alert of type handshake_failure. Otherwise, rule processing continues after the re-handshake is complete. If the client had already provided a certificate, this function does nothing and rule processing continues. If the underlying connection is not SSL, the transaction is aborted (i.e., this is interpreted as a failed re-handshake). Note that using this function overrides the setting ssl!ssl3_allow_rehandshake. It is strongly recommended to check for client-side support of RFC 5746 before using it, see ssl.clientSupportsSecureRenegotiation. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="ssl.clientSupportsSecureRenegotiation" />
+                  <related func="ssl.requestCert" />
+               </relatedFunctions>
+            </func>
             <func name="ssl.serverCert">
                <parameters min="0" max="0" regex=""></parameters>
                <restrictions>
@@ -6606,6 +6905,81 @@
                   <related func="sys.time.month" />
                   <related func="sys.time.year" />
                   <related func="sys.localtime.format" />
+               </relatedFunctions>
+            </func>
+         </functions>
+      </group>
+      <group name="tcp">
+         <description></description>
+         <functions>
+            <func name="tcp.close">
+               <parameters min="1" max="1" regex=".">
+                  <param name="sock" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+                  <restriction type="REQUIRES_CONNECTION" />
+                  <restriction type="ZXTM_LOADBALANCE" />
+               </restrictions>
+               <description>&lt;p&gt; Close a previously opened TCP socket. A non-zero return value indicates a successful close, if 0 is returned then an error occured and an error string will be in '$1'. &lt;/p&gt;&lt;p&gt; If a rule fails to close a TCP socket, it will be closed automatically when the Virtual Server connection finishes. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="tcp.connect" />
+                  <related func="tcp.write" />
+                  <related func="tcp.read" />
+               </relatedFunctions>
+            </func>
+            <func name="tcp.connect">
+               <parameters min="2" max="3" regex="...?">
+                  <param name="ip" />
+                  <param name="port" />
+                  <param name="timeout" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+                  <restriction type="REQUIRES_CONNECTION" />
+                  <restriction type="ZXTM_LOADBALANCE" />
+               </restrictions>
+               <description>&lt;p&gt; Create a new TCP socket to the supplied IP address and port. This function will return a socket handle that can be used by other tcp.* functions. The created TCP socket is unique to this connection, and can't be used by other connections. &lt;/p&gt;&lt;p&gt; An optional timeout can be specified in milliseconds. If a connection has not been established within this time the function will return 0 and $1 will be set to "timeout". &lt;/p&gt;&lt;p&gt; Note that if the Virtual Server connection times out before this socket has been established then the connection will be terminated. &lt;/p&gt;&lt;p&gt; Returns 0 on error (with an error message in $1). &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="tcp.write" />
+                  <related func="tcp.read" />
+                  <related func="tcp.close" />
+               </relatedFunctions>
+            </func>
+            <func name="tcp.read">
+               <parameters min="2" max="3" regex="...?">
+                  <param name="socket" />
+                  <param name="maximum" />
+                  <param name="timeout" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+                  <restriction type="REQUIRES_CONNECTION" />
+                  <restriction type="ZXTM_LOADBALANCE" />
+               </restrictions>
+               <description>&lt;p&gt; Read data from a previously opened TCP connection. The function waits until data is available on the TCP socket, and will then return the available data (up to the specified 'maximum'). If an error occurs an empty string will be returned and $1 will contain an error message, or 0 if the connection has been closed. &lt;/p&gt;&lt;p&gt; An optional timeout can be specified in milliseconds. If a no data has been read within this time the function will return an empty string and $1 will be set to "timeout". &lt;/p&gt;&lt;p&gt; Note that if the Virtual Server connection times out before any data has been read then the connection will terminated. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="tcp.connect" />
+                  <related func="tcp.write" />
+                  <related func="tcp.close" />
+               </relatedFunctions>
+            </func>
+            <func name="tcp.write">
+               <parameters min="2" max="3" regex="...?">
+                  <param name="socket" />
+                  <param name="data" />
+                  <param name="timeout" />
+               </parameters>
+               <restrictions>
+                  <restriction type="ZXTM_CORE" />
+                  <restriction type="REQUIRES_CONNECTION" />
+                  <restriction type="ZXTM_LOADBALANCE" />
+               </restrictions>
+               <description>&lt;p&gt; Writes all of the supplied data to a TCP socket. The function will return the number of bytes written. If an error occurs then -1 will be returned and $1 will contain error message. &lt;/p&gt;&lt;p&gt; An optional timeout can be specified in milliseconds. After this time the number of bytes written will be returned and $1 will contain 'timeout'. &lt;/p&gt;&lt;p&gt; Note that if the Virtual Server connection times out before the data has been written then the connection will terminated. &lt;/p&gt;</description>
+               <relatedFunctions>
+                  <related func="tcp.connect" />
+                  <related func="tcp.read" />
+                  <related func="tcp.close" />
                </relatedFunctions>
             </func>
          </functions>

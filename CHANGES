@@ -2,7 +2,7 @@ Stingray Plugin for Eclipse
 ===========================
 
 
-Release 20140320.1.98061
+Release 20140402.1.91597
 ========================
 
  * Stingray Plugin for Eclipse now contains help data for TrafficScript 
@@ -16,6 +16,10 @@ Release 20140320.1.98061
  * The validation rules in the eclipse plugin have been widened to allow 
    periods, '@' and '\' characters in the username. 
    SR24347
+ 
+ * Some TrafficScript functions which were missing from the Eclipse plugin
+   help data for Traffic Manager version 9.5 have been added.
+   SR27661
 
 Release 20140207.1.87712
 ========================
